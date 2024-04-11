@@ -60,12 +60,6 @@ void loop()
       SerialBT.printf("\n" + b1);
     }
   }
-  if (count <8) {
-    Serial.printf("%u\n",count);
-    requestByte(count);
-    Serial.printf("\n");
-    count++;
-  }
 
   delay(5000);
 }
