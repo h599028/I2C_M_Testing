@@ -7,9 +7,12 @@
 #include "BluetoothSerial.h"
 
 #define I2C_DEV_ADDR 0x08
+#define I2C_PGN_REQ 0x08
+
+
 
 BluetoothSerial SerialBT;
-
+byte pgn_request= (byte) I2C_PGN_REQ;
 int count = 0;
 
 void requestByte(byte myIndex)
@@ -46,18 +49,26 @@ void loop()
 {
   if (SerialBT.available())
   {
-    byte inputByte = (byte)SerialBT.read();
-
+    byte inputByte[] = {pgn_request, 0x01, 0xf8, 0x02};
+    byte length;
     Wire.beginTransmission(I2C_DEV_ADDR);
-    Wire.write(inputByte);
+    Wire.write(inputByte, 4);
     Wire.endTransmission();
 
     Wire.requestFrom(I2C_DEV_ADDR, 1);
     while (Wire.available())
     {
-      byte b1 = Wire.read();
-      // byte b2=Wire.read();
-      SerialBT.printf("\n" + b1);
+      length = Wire.read();
+      // byte b2 = Wire.read();
+      SerialBT.printf("\n%d", length);
+    }
+    Wire.requestFrom(I2C_DEV_ADDR, length);
+    while (Wire.available()) 
+    {
+      while (length >0) 
+      {
+        
+      }
     }
   }
 
