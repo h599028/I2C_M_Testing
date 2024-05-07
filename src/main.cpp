@@ -7,11 +7,7 @@
 #include "BluetoothSerial.h"
 
 #define I2C_DEV_ADDR 0x08
-#define I2C_PGN_REQ 0x08
 
-
-
-byte pgn_request = (byte)I2C_PGN_REQ;
 int count = 0;
 
 void setup()
